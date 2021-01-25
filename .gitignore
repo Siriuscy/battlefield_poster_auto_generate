@@ -142,3 +142,15 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+.idea/.gitignore
+.idea/encodings.xml
+.idea/generate_with_text.iml
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+add_text_1.jpg
+cache/
+neotebook.ipynb
+out_put/
+demo.py
+todo.py
