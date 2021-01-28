@@ -77,7 +77,7 @@ def write_on_pic(coordinate_list, bk_img, useful_space, text_in,
             colour = [100, 100, 100]
             if "background" in key:
                 print("has _with_ground")
-            # print("colour missing")
+            # print("generate_backgound_info missing")
 
         try:
             font_key = key + "_font"
