@@ -15,7 +15,7 @@ from collections import Counter
 from core.utils import get_map_code_list
 
 
-def get_font_size(coordinate_proportion, text, bk_width, bk_height, font_path, draw, multi_line,
+def get_font_size(coordinate_proportion, text, bg_width, bg_height, font_path, draw, multi_line,
                   font_spacing_proportion=constants.FONT_SPACING_PROPORTION, interval=10):
     """
 
@@ -27,12 +27,12 @@ def get_font_size(coordinate_proportion, text, bk_width, bk_height, font_path, d
     :return: font_size 间隔为30
     """
 
-    true_width = bk_width * (coordinate_proportion[1] - coordinate_proportion[0])
+    true_width = bg_width * (coordinate_proportion[1] - coordinate_proportion[0])
     font_size = 0
     if multi_line:
         text_list = text.split("\n")
         line_num = len(text_list)
-        true_height = bk_height * (coordinate_proportion[3] - coordinate_proportion[1]) / line_num
+        true_height = bg_height * (coordinate_proportion[3] - coordinate_proportion[1]) / line_num
         while True:
             sum_font_height = 0
             font_size += interval
@@ -57,12 +57,17 @@ def get_font_size(coordinate_proportion, text, bk_width, bk_height, font_path, d
 
 
 # todo usefulspace 还没用
-def write_on_pic(coordinate_list, bk_img, useful_space, text_in,
-                 template_shape, font_dic, colour_dic, bk_img_id, map_code):
-    img_pil = Image.fromarray(bk_img)
+def write_on_pic(coordinate_list, bg_img, useful_space, text_in,
+                 template_shape, font_dic, colour_dic, bg_img_id, map_code):
+    img_pil = Image.fromarray(bg_img)
     draw = ImageDraw.Draw(img_pil)
-    bk_width = bk_img.shape[1]
-    bk_height = bk_img.shape[0]
+    bk_width = bg_img.shape[1]
+    bk_height = bg_img.shape[0]
+    bg_data = json.load(open(constants.BG_IMG_INFO_PATH, "r"))[bg_img_id]
+    palettes = bg_data['palettes']
+    mapped_value_list = [palettes[int(_)-1] for _ in bg_data["mapped"]]
+    for _ in mapped_value_list:
+        palettes.remove(_)
 
     for _ in coordinate_list:
         key = list(_.keys())[0]
@@ -70,14 +75,12 @@ def write_on_pic(coordinate_list, bk_img, useful_space, text_in,
         text = text_in[key]
         text_num = len(text)
 
-        try:
-            colour_key = key + "_colour"
-            colour = colour_dic[colour_key]
-        except:
-            colour = [100, 100, 100]
-            if "background" in key:
-                print("has _with_ground")
-            # print("generate_backgound_info missing")
+        # 背景图的信息获取
+        bg_useful_space = bg_data["useful_space"]
+
+        # 随机数取颜色
+        random_num = np.random.randint(len(palettes))
+        colour = palettes[random_num]
 
         try:
             font_key = key + "_font"
@@ -134,45 +137,44 @@ def write_on_pic(coordinate_list, bk_img, useful_space, text_in,
             # 绘制文字信息
             draw.text(text_position, text, font=font, fill=(colour[0], colour[1], colour[2]))
 
-    bk_img = np.array(img_pil)
+    bg_img = np.array(img_pil)
     count = 0
-    save_name = bk_img_id + "_" + str(map_code) + "_" + str(count)
+    save_name = bg_img_id + "_" + str(map_code) + "_" + str(count)
 
     while os.path.exists(os.path.join(constants.OUT_PUT_PATH, save_name + ".jpg")):
-        save_name = bk_img_id + "_" + str(map_code) + "_" + str(count)
+        save_name = bg_img_id + "_" + str(map_code) + "_" + str(count)
         count += 1
 
-    cv2.imwrite(os.path.join(constants.OUT_PUT_PATH, save_name + ".jpg"), bk_img)
+    cv2.imwrite(os.path.join(constants.OUT_PUT_PATH, save_name + ".jpg"), bg_img)
     with open(os.path.join(constants.OUT_PUT_PATH, save_name + ".txt"), "w+") as e:
         e.writelines(str(text_in))
 
 
-def generate(map_code_index_list, text_in, map_code):
-    with open(constants.TEMPLATE_JSON_PATH, "r") as e:
-        data = json.loads(e.read())
-    for _ in map_code_index_list:
-        template = data["template"][_]
-        coordinate_list = template["element_coordinate_list"]
-        bk_img_id = text_in["background_id"]
-        bk_img = cv2.imread(os.path.join(constants.BG_IMG_PATH, bk_img_id))
-        useful_space = template["useful_space"]
-        template_shape = template["shape"]
-        colour_dic = template["element_font_colour"]
-        font_dic = template["element_font"]
+def generate(mapped_id_list, text_in, map_code):
+    data = json.load(open(constants.TEMPLATE_JSON_PATH, "r"))
+    bg_img_id = text_in["background_id"]
+    bg_path = os.path.join(constants.BG_IMG_PATH, bg_img_id + ".jpg")
+    bg_img = cv2.imread(bg_path)
+    for _ in mapped_id_list:
+        coordinate_list = data[_]["element_coordinate_list"]
+        useful_space = data[_]["useful_space"]
+        template_shape = data[_]["shape"]
+        colour_dic = data[_]["element_font_colour"]
+        font_dic = data[_]["element_font"]
         write_on_pic(coordinate_list=coordinate_list,
-                     bk_img=bk_img,
+                     bg_img=bg_img,
                      useful_space=useful_space,
                      text_in=text_in,
                      template_shape=template_shape,
                      colour_dic=colour_dic,
                      font_dic=font_dic,
-                     bk_img_id=bk_img_id,
+                     bg_img_id=bg_img_id,
                      map_code=map_code,
                      )
 
 
 if __name__ == "__main__":
-    map_code_index_list, map_code = get_map_code_list()
-    generate(map_code_index_list=map_code_index_list,
+    mapped_id_list, map_code = get_map_code_list()
+    generate(mapped_id_list=mapped_id_list,
              text_in=input.text_in,
              map_code=map_code)

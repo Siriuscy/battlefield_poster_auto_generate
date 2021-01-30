@@ -37,29 +37,12 @@ def download_img(data_path=constants.DATA_PATH, save_path=constants.ORIGINAL_IMG
     print("empty_labeled_num:{}".format(empty_labeled_num))
 
 
-def write_json(new_dic):
-    if not os.path.exists(constants.TEMPLATE_JSON_PATH):
-        with open(constants.TEMPLATE_JSON_PATH, "w+") as e:
-            json.dump({"id_list": [], "map_code": [], "template": []}, e)
-
-    with open(constants.TEMPLATE_JSON_PATH, "r") as f:
-        initial_data = json.loads(f.read())
-
-    if new_dic["id"] in initial_data["id_list"]:
-        print("{} exists,write_json_continue".format(new_dic["id"]))
-    else:
-        with open(constants.TEMPLATE_JSON_PATH, "w+") as f:
-            initial_data["id_list"].append(new_dic["id"])
-            initial_data["map_code"].append(new_dic["map_code"])
-            initial_data["template"].append(new_dic)
-            json.dump(initial_data, f)
-
-
 def generate_template_library():
     """
     模板：原图的id 原图尺寸 元素坐标 元素的字体色号 元素的匹配槽
     :return:
     """
+    container = {}
     data = pd.read_csv(constants.DATA_PATH)
     for i in range(data.shape[0]):
         index_id = data["DataRow ID"][i]
@@ -114,7 +97,6 @@ def generate_template_library():
             img_useful_space = [0, 1.0, 0, 1.0]
 
         # map_code
-        # ["headline", "subtitle", "chart_title", "chart_num", "text", "image"]
         element_list = [key for i in element_coordinate_list for key, value in i.items()]
         num_dic = Counter(element_list)
         map_code = ""
@@ -122,18 +104,15 @@ def generate_template_library():
             num = num_dic[_]
             map_code += str(num)
 
-        # load context
-        new_dic["id"] = index_id
         new_dic["map_code"] = map_code
         new_dic["shape"] = (img_shape[1], img_shape[0])
         new_dic["useful_space"] = img_useful_space
         new_dic["element_coordinate_list"] = element_coordinate_list
         new_dic["element_font_colour"] = element_font_colour
         new_dic["element_font"] = element_font
-        # print(element_coordinate_list, element_font_colour)
-        # print(element_font)
-        # print(new_dic)
-        write_json(new_dic)
+        container[index_id] = new_dic
+
+    json.dump(container, open(constants.TEMPLATE_JSON_PATH, "w"), indent=4)
 
 
 def pipeline():

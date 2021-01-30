@@ -1,6 +1,8 @@
 import math
 import numpy as np
 import cv2
+import json
+from generate_background_info import constants
 
 
 def rgb2hsv(color):
@@ -29,6 +31,29 @@ def rgb2hsv(color):
     return h, s, v
 
 
+def read_and_write_cache():
+    '''
+    对背景图片的聚类分析数据进行缓存，不然运行数据太慢了
+    :return:
+    '''
+
+    def decorator(original_func):
+        try:
+            f = json.load(open(constants.CACHE_PATH, "r"))
+        except(IOError, ValueError):
+            f = {}
+
+        def new_func(id):
+            if id not in f:
+                f[id] = original_func(id)
+                json.dump(f, open(constants.CACHE_PATH, "w"), indent=4)
+            return f[id]
+
+        return new_func
+
+    return decorator
+
+
 def HSVDistance(hsv_1, hsv_2):
     H_1, S_1, V_1 = hsv_1
     H_2, S_2, V_2 = hsv_2
@@ -48,6 +73,7 @@ def HSVDistance(hsv_1, hsv_2):
     return math.sqrt(dx * dx + dy * dy + dz * dz)
 
 
+@read_and_write_cache()
 def get_colour_cluster_list(bk_img_path, num_clusters=2):
     """
     对比度

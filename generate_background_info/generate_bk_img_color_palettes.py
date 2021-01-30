@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from generate_backgound_info import constants
-from generate_backgound_info.utils import functions_utils
+from generate_background_info import constants
+from generate_background_info.utils import functions_utils
 import math
 import os
 import json
@@ -9,6 +9,24 @@ import requests
 from io import BytesIO
 from PIL import Image
 import cv2
+
+
+def get_useful_space_info(bg_id):
+    useful_space_data = pd.read_csv(constants.LABEL_BOX_DATASET_PATH)
+    img = cv2.imread(os.path.join(constants.BG_IMG_PATH, bg_id + ".jpg"))
+    img_width = img.shape[1]
+    img_height = img.shape[0]
+    index = useful_space_data[useful_space_data["DataRow ID"] == bg_id].index[0]
+
+    top = json.loads(useful_space_data.loc[index, "Label"])["objects"][0]["bbox"]["top"]
+    left = json.loads(useful_space_data.loc[index, "Label"])["objects"][0]["bbox"]["left"]
+    height = json.loads(useful_space_data.loc[index, "Label"])["objects"][0]["bbox"]["height"]
+    width = json.loads(useful_space_data.loc[index, "Label"])["objects"][0]["bbox"]["width"]
+    x1 = left / img_width,
+    x2 = (left + width) / img_width,
+    y1 = top / img_height,
+    y2 = (top + height) / img_height
+    return x1[0], x2[0], y1[0], y2
 
 
 def download_bk_img(data_path=constants.LABEL_BOX_DATASET_PATH, save_path=constants.BG_IMG_PATH,
@@ -97,48 +115,46 @@ def calculate(colour_hsv, main_colour_list, colour_rgb):
     return palettes.tolist(), list(mapped_color)
 
 
-def write_bk_color_palettes(bk_img_path=constants.BG_IMG_PATH):
+def write_bg_color_palettes(bk_img_path=constants.BG_IMG_PATH):
     bk_img_list = os.listdir(bk_img_path)
-    container = {"background_info": []}
     colour_hsv, colour_saves, colour_rgb = data_process(data_path=constants.PALETTES_DATA_PATH)
-
+    container = {}
     try:
         bk_img_list.remove(".DS_Store")
     except:
         print("no .DS_Store")
 
     for _ in bk_img_list:
-        bk_id = _[:-4]
+        bg_id = _[:-4]
         img_path = os.path.join(bk_img_path, _)
-
-        # 想办法缓存这个，太慢了
         main_colour_list = functions_utils.get_colour_cluster_list(img_path)
         bk_info_dic = {}
+
         # 写入字典
         palettes, mapped_color = calculate(colour_hsv, main_colour_list, colour_rgb)
-
-        bk_info_dic["id"] = bk_id
         bk_info_dic["palettes"] = palettes
         bk_info_dic["mapped"] = mapped_color
-        container["background_info"].append(bk_info_dic)
-        print("{}_done".format(bk_id))
+        bk_info_dic["useful_space"] = get_useful_space_info(bg_id)
+
+        container[bg_id] = bk_info_dic
+        print("{}_done".format(bg_id))
 
     with open(constants.BG_IMG_INFO_PATH, "w") as e:
-        json.dump(container, e)
+        json.dump(container, e, indent=4)
+
+
+def pipeline():
+    download_bk_img()
+    write_bg_color_palettes()
 
 
 if __name__ == "__main__":
     '''
     step one:generate palettes with format with hsv
-    step two:get posters main generate_backgound_info clusters
+    step two:get posters main generate_background_info clusters
     param:n the num of colors that map
     step three:calculate n times ,get the list of min distance of each palettes ,add all
     chose the min 
     '''
     download_bk_img()
-    write_bk_color_palettes()
-    # main_colour_list = [(10, 22, 33), (10, 53, 143)]
-    # colour_hsv, colour_saves, colour_rgb = data_process(data_path=constants.PALETTES_DATA_PATH)
-    # palettes, mapped_color = calculate(colour_hsv, main_colour_list, colour_rgb)
-    # write_bk_color_palettes(colour_hsv=colour_hsv, colour_rgb=colour_rgb)
-    pass
+    write_bg_color_palettes()
