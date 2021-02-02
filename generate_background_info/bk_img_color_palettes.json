@@ -46,6 +46,21 @@
             0.8866886688668867,
             0.10520527859237537,
             0.8969941348973607
+        ],
+        "one_color_theory": [
+            157,
+            157,
+            106
+        ],
+        "adjacent_color_theory": [
+            187,
+            255,
+            122
+        ],
+        "contrast_color_theory": [
+            122,
+            254,
+            255
         ]
     },
     "ckk8b8zb2bhgz0re71pfy59t6": {
@@ -95,6 +110,21 @@
             0.8782467532467533,
             0.05325,
             0.95425
+        ],
+        "one_color_theory": [
+            157,
+            157,
+            157
+        ],
+        "adjacent_color_theory": [
+            255,
+            255,
+            255
+        ],
+        "contrast_color_theory": [
+            255,
+            255,
+            255
         ]
     },
     "ckk8b8zb1bhfb0re70e7j6hzl": {
@@ -144,6 +174,21 @@
             0.8340270551508845,
             0.1597222222222222,
             0.8711805555555555
+        ],
+        "one_color_theory": [
+            137,
+            53,
+            52
+        ],
+        "adjacent_color_theory": [
+            222,
+            113,
+            0
+        ],
+        "contrast_color_theory": [
+            0,
+            222,
+            3
         ]
     },
     "ckk8b8zb1bhez0re7ac5tahqh": {
@@ -185,14 +230,29 @@
             ]
         ],
         "mapped": [
-            "2",
-            "1"
+            "1",
+            "2"
         ],
         "useful_space": [
             0.04526534859521332,
             0.9547346514047866,
             0.04826388888888889,
             0.8239583333333333
+        ],
+        "one_color_theory": [
+            152,
+            144,
+            96
+        ],
+        "adjacent_color_theory": [
+            195,
+            247,
+            101
+        ],
+        "contrast_color_theory": [
+            101,
+            247,
+            225
         ]
     },
     "ckk8b8zb2bhgv0re7bcjq17x5": {
@@ -242,6 +302,21 @@
             0.9155470249520153,
             0.043452556902157845,
             0.9565474430978421
+        ],
+        "one_color_theory": [
+            116,
+            62,
+            63
+        ],
+        "adjacent_color_theory": [
+            188,
+            116,
+            48
+        ],
+        "contrast_color_theory": [
+            49,
+            188,
+            48
         ]
     },
     "ckk8b8zb1bhff0re7a4hxgamg": {
@@ -290,6 +365,21 @@
             0.96875,
             0.027126099706744868,
             0.9791055718475073
+        ],
+        "one_color_theory": [
+            109,
+            42,
+            42
+        ],
+        "adjacent_color_theory": [
+            177,
+            90,
+            2
+        ],
+        "contrast_color_theory": [
+            2,
+            177,
+            3
         ]
     },
     "ckk8b8zb2bhfr0re79pa14opt": {
@@ -331,14 +421,29 @@
             ]
         ],
         "mapped": [
-            "4",
-            "7"
+            "7",
+            "4"
         ],
         "useful_space": [
             0.09204218600191755,
             0.8815915627996165,
             0.053237410071942444,
             0.9280575539568345
+        ],
+        "one_color_theory": [
+            152,
+            156,
+            156
+        ],
+        "adjacent_color_theory": [
+            242,
+            249,
+            254
+        ],
+        "contrast_color_theory": [
+            253,
+            242,
+            254
         ]
     },
     "ckk8b8zb2bhfz0re7b4iw6ltw": {
@@ -388,6 +493,21 @@
             0.7991531404375442,
             0.02349206349206349,
             0.9331216931216931
+        ],
+        "one_color_theory": [
+            40,
+            22,
+            21
+        ],
+        "adjacent_color_theory": [
+            66,
+            42,
+            16
+        ],
+        "contrast_color_theory": [
+            16,
+            66,
+            17
         ]
     },
     "ckk8b8zb2bhgj0re7geegahnd": {
@@ -437,6 +557,21 @@
             0.8686789494315954,
             0.12014529198100028,
             0.8809723386420788
+        ],
+        "one_color_theory": [
+            150,
+            137,
+            130
+        ],
+        "adjacent_color_theory": [
+            244,
+            235,
+            190
+        ],
+        "contrast_color_theory": [
+            190,
+            244,
+            208
         ]
     },
     "ckk8b8zb2bhgf0re7dat67g84": {
@@ -478,14 +613,29 @@
             ]
         ],
         "mapped": [
-            "4",
-            "7"
+            "7",
+            "4"
         ],
         "useful_space": [
             0.09141828365673135,
             0.866373274654931,
             0.07562408223201175,
             0.9120411160058737
+        ],
+        "one_color_theory": [
+            101,
+            101,
+            101
+        ],
+        "adjacent_color_theory": [
+            164,
+            164,
+            164
+        ],
+        "contrast_color_theory": [
+            164,
+            164,
+            164
         ]
     },
     "ckk8b8zb1bhf70re7e8qgbe3y": {
@@ -527,14 +677,29 @@
             ]
         ],
         "mapped": [
-            "5",
-            "7"
+            "7",
+            "5"
         ],
         "useful_space": [
             0.12175324675324675,
             0.8647186147186147,
             0.17975,
             0.89725
+        ],
+        "one_color_theory": [
+            32,
+            45,
+            67
+        ],
+        "adjacent_color_theory": [
+            30,
+            17,
+            110
+        ],
+        "contrast_color_theory": [
+            110,
+            17,
+            51
         ]
     },
     "ckk8b8zb2bhgr0re78u61ell0": {
@@ -576,14 +741,29 @@
             ]
         ],
         "mapped": [
-            "2",
-            "5"
+            "5",
+            "2"
         ],
         "useful_space": [
             0.037460978147762745,
             0.9661810613943809,
             0.027126099706744868,
             0.9750733137829912
+        ],
+        "one_color_theory": [
+            24,
+            22,
+            55
+        ],
+        "adjacent_color_theory": [
+            50,
+            4,
+            89
+        ],
+        "contrast_color_theory": [
+            89,
+            7,
+            4
         ]
     },
     "ckk8b8zb2bhfj0re7h33f5swe": {
@@ -633,6 +813,21 @@
             0.8457389428263214,
             0.1039568345323741,
             0.8971223021582734
+        ],
+        "one_color_theory": [
+            156,
+            154,
+            155
+        ],
+        "adjacent_color_theory": [
+            253,
+            250,
+            249
+        ],
+        "contrast_color_theory": [
+            250,
+            253,
+            249
         ]
     },
     "ckk8b8zb1bhf30re7dn9t44cq": {
@@ -681,6 +876,21 @@
             0.88384,
             0.087926703118073,
             0.8921235407122802
+        ],
+        "one_color_theory": [
+            79,
+            41,
+            41
+        ],
+        "adjacent_color_theory": [
+            128,
+            78,
+            29
+        ],
+        "contrast_color_theory": [
+            29,
+            128,
+            29
         ]
     },
     "ckk8b8zb2bhg70re787zk07dk": {
@@ -730,6 +940,21 @@
             0.8893956670467503,
             0.07547169811320754,
             0.9256220946130709
+        ],
+        "one_color_theory": [
+            136,
+            152,
+            155
+        ],
+        "adjacent_color_theory": [
+            202,
+            219,
+            252
+        ],
+        "contrast_color_theory": [
+            252,
+            202,
+            244
         ]
     },
     "ckk8b8zb2bhg30re719mqf8ei": {
@@ -779,6 +1004,21 @@
             0.8487157775896134,
             0.15495342929720576,
             0.8636748518204911
+        ],
+        "one_color_theory": [
+            156,
+            156,
+            156
+        ],
+        "adjacent_color_theory": [
+            254,
+            254,
+            254
+        ],
+        "contrast_color_theory": [
+            254,
+            254,
+            254
         ]
     },
     "ckk8b8zb2bhgn0re7hk40eoyf": {
@@ -828,6 +1068,21 @@
             0.9155470249520153,
             0.04463493940289684,
             0.9518179130948862
+        ],
+        "one_color_theory": [
+            29,
+            47,
+            63
+        ],
+        "adjacent_color_theory": [
+            12,
+            15,
+            103
+        ],
+        "contrast_color_theory": [
+            103,
+            12,
+            60
         ]
     },
     "ckk8b8zb2bhgb0re7cyup52ww": {
@@ -877,6 +1132,21 @@
             0.9775332416322787,
             0.01121930567315834,
             0.9887806943268417
+        ],
+        "one_color_theory": [
+            85,
+            54,
+            54
+        ],
+        "adjacent_color_theory": [
+            138,
+            98,
+            57
+        ],
+        "contrast_color_theory": [
+            57,
+            138,
+            57
         ]
     },
     "ckk8b8zb2bhfv0re78uqqao58": {
@@ -926,6 +1196,21 @@
             0.8963494132985659,
             0.156158357771261,
             0.8995601173020528
+        ],
+        "one_color_theory": [
+            106,
+            45,
+            42
+        ],
+        "adjacent_color_theory": [
+            172,
+            95,
+            5
+        ],
+        "contrast_color_theory": [
+            5,
+            172,
+            12
         ]
     }
 }

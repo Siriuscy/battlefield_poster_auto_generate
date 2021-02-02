@@ -143,9 +143,74 @@ def write_bg_color_palettes(bk_img_path=constants.BG_IMG_PATH):
         json.dump(container, e, indent=4)
 
 
+def add_one_color_theory_palettes():
+    '''
+    只降低明度和饱和度
+    :return:
+    '''
+    main_color_data = json.load(open(constants.CACHE_PATH, "r"))
+    bk_img_list = os.listdir(constants.BG_IMG_PATH)
+    palettes_data = json.load(open(constants.BG_IMG_INFO_PATH, "r"))
+    for _ in bk_img_list:
+        main_color = main_color_data["./bg_img/" + _][0]
+        id_ = _[:-4]
+        h = main_color[0]
+        s = main_color[1] * 0.618
+        v = main_color[2] * 0.618
+
+        r, g, b = functions_utils.hsv2rgb(h, s, v)
+        palettes_data[id_]["one_color_theory"] = [r, g, b]
+    json.dump(palettes_data, open(constants.BG_IMG_INFO_PATH, "w"), indent=4)
+
+
+def add_adjacent_color_theory_palettes():
+    '''
+    30度之内的颜色
+    :return:
+    '''
+    main_color_data = json.load(open(constants.CACHE_PATH, "r"))
+    bk_img_list = os.listdir(constants.BG_IMG_PATH)
+    palettes_data = json.load(open(constants.BG_IMG_INFO_PATH, "r"))
+    for _ in bk_img_list:
+        main_color = main_color_data["./bg_img/" + _][0]
+        id_ = _[:-4]
+        h = main_color[0] + 30
+        if h > 360:
+            h = h - 360
+        s = main_color[1]
+        v = main_color[2]
+
+        r, g, b = functions_utils.hsv2rgb(h, s, v)
+        palettes_data[id_]["adjacent_color_theory"] = [r, g, b]
+    json.dump(palettes_data, open(constants.BG_IMG_INFO_PATH, "w"), indent=4)
+
+
+def add_contrast_color_theory_palettes():
+    '''
+    30度之内的颜色
+    :return:
+    '''
+    main_color_data = json.load(open(constants.CACHE_PATH, "r"))
+    bk_img_list = os.listdir(constants.BG_IMG_PATH)
+    palettes_data = json.load(open(constants.BG_IMG_INFO_PATH, "r"))
+    for _ in bk_img_list:
+        main_color = main_color_data["./bg_img/" + _][0]
+        id_ = _[:-4]
+        h = main_color[0] + 120
+        if h > 360:
+            h = h - 360
+        s = main_color[1]
+        v = main_color[2]
+
+        r, g, b = functions_utils.hsv2rgb(h, s, v)
+        palettes_data[id_]["contrast_color_theory"] = [r, g, b]
+    json.dump(palettes_data, open(constants.BG_IMG_INFO_PATH, "w"), indent=4)
+
+
 def pipeline():
     download_bk_img()
     write_bg_color_palettes()
+    add_one_color_theory_palettes()
 
 
 if __name__ == "__main__":
@@ -156,5 +221,8 @@ if __name__ == "__main__":
     step three:calculate n times ,get the list of min distance of each palettes ,add all
     chose the min 
     '''
-    download_bk_img()
-    write_bg_color_palettes()
+    # download_bk_img()
+    # write_bg_color_palettes()
+    # add_one_color_theory_palettes()
+    # add_adjacent_color_theory_palettes()
+    add_contrast_color_theory_palettes()

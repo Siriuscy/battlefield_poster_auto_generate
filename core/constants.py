@@ -7,4 +7,5 @@ TEMPLATE_JSON_PATH = "./template_json.json"
 FONT_PATH = "./fonts"
 FONT_SPACING_PROPORTION = 0.1
 BG_IMG_INFO_PATH = "./generate_background_info/bk_img_color_palettes.json"
+GENERATION_LOG_PATH="./generate_log.json"
 # ORGINAL_IMG_SIZE=

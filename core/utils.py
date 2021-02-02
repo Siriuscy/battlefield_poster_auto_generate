@@ -34,6 +34,8 @@ def get_map_code_list():
     return mapped_id_list, map_code
 
 
+
+
 if __name__ == "__main__":
     _, a = get_map_code_list()
     print(_)

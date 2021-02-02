@@ -70,10 +70,14 @@ def generate_template_library():
                 height = json.loads(data["Label"][i])["objects"][_]["bbox"]["height"]
                 width = json.loads(data["Label"][i])["objects"][_]["bbox"]["width"]
                 title = json.loads(data["Label"][i])["objects"][_]["title"]
-                x1 = left / img_width,
-                x2 = (left + width) / img_width,
-                y1 = top / img_height,
-                y2 = (top + height) / img_height
+                # x1 = left / img_width,
+                # x2 = (left + width) / img_width,
+                # y1 = top / img_height,
+                # y2 = (top + height) / img_height
+                x1 = round(left / img_width, 1),
+                x2 = round((left + width) / img_width, 1),
+                y1 = round(top / img_height, 1),
+                y2 = round((top + height) / img_height, 1)
                 dic_position[title] = (x1[0], x2[0], y1[0], y2)
                 element_coordinate_list.append(dic_position)
             if "point" in json.loads(data["Label"][i])["objects"][_]:
