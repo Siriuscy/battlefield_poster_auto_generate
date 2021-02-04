@@ -76,9 +76,9 @@ def generate_template_library():
                 # y2 = (top + height) / img_height
                 x1 = round(left / img_width, 1),
                 x2 = round((left + width) / img_width, 1),
-                y1 = round(top / img_height, 1),
-                y2 = round((top + height) / img_height, 1)
-                dic_position[title] = (x1[0], x2[0], y1[0], y2)
+                y1 = top / img_height,
+                y2 = (top + height) / img_height,
+                dic_position[title] = (x1[0], x2[0], y1[0], y2[0])
                 element_coordinate_list.append(dic_position)
             if "point" in json.loads(data["Label"][i])["objects"][_]:
                 position_x = json.loads(data["Label"][i])["objects"][_]["point"]["x"]
@@ -86,10 +86,10 @@ def generate_template_library():
                 colour = img[position_y, position_x]
                 title = json.loads(data["Label"][i])["objects"][_]["title"]
                 element_font_colour[title] = colour.tolist()
-        for _ in np.arange(len(json.loads(data["Label"][i])["classifications"])):
-            title = json.loads(data["Label"][i])["classifications"][_]["title"]
-            font = json.loads(data["Label"][i])["classifications"][_]["answer"]["title"]
-            element_font[title] = font
+        # for _ in np.arange(len(json.loads(data["Label"][i])["classifications"])):
+        #     title = json.loads(data["Label"][i])["classifications"][_]["title"]
+        #     font = json.loads(data["Label"][i])["classifications"][_]["answer"]["title"]
+        #     element_font[title] = font
 
         # 找到space_useful
         for index, _ in enumerate(element_coordinate_list):
@@ -112,8 +112,8 @@ def generate_template_library():
         new_dic["shape"] = (img_shape[1], img_shape[0])
         new_dic["useful_space"] = img_useful_space
         new_dic["element_coordinate_list"] = element_coordinate_list
-        new_dic["element_font_colour"] = element_font_colour
-        new_dic["element_font"] = element_font
+        # new_dic["element_font_colour"] = element_font_colour
+        # new_dic["element_font"] = element_font
         container[index_id] = new_dic
 
     json.dump(container, open(constants.TEMPLATE_JSON_PATH, "w"), indent=4)

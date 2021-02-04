@@ -10,20 +10,16 @@ def get_map_code_list():
     in:input.py
     :return: map_code_index
     """
-    key_list = []
-    value_list = []
     # 计算map_code
-    content = input.text_in
-    for key, value in content.items():
-        key_list.append(key)
-        value_list.append(value)
-    num_dic = Counter(key_list)
+    content = input.text_in['writing']
     map_code = ""
     for _ in constants.MAP_CODE_ELEMENT_LIST:
-        num = num_dic[_]
-        map_code += str(num)
+        try:
+            num = len(content[_])
+            map_code += str(num)
+        except KeyError:
+            map_code += str(0)
     print(map_code)
-    mapped_id_list = []
     template = json.load(open(constants.TEMPLATE_JSON_PATH, "r"))
 
     mapped_id_list = []
